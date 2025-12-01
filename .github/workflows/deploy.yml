@@ -26,36 +26,22 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          # Use ed25519 key for better security and performance
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          # Add the host key to known_hosts to prevent 'man-in-the-middle' warnings
           ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Deploy to Droplet
         env:
           APP_NAME: ${{ secrets.APP_NAME }}
         run: |
-          # The entire block below is executed on the Droplet via SSH
           ssh -i ~/.ssh/id_ed25519 "${{ secrets.SSH_USER }}"@"${{ secrets.SSH_HOST }}" << 'EOF'
 set -e
-
 echo "Starting deploy on server..."
-
-# Ensure this path is correct on your Droplet
 cd /root/node-js
-
-# Pull latest code
 git fetch --all
 git reset --hard origin/main
-
-# Install deps
 npm install
-
-# Restart OR start with PM2. Using "$APP_NAME" from environment variable.
 pm2 restart "$APP_NAME" || pm2 start server.js --name "$APP_NAME"
-
-# Save PM2 process list so it restarts after a server reboot
 pm2 save
 echo "Deploy complete."
 EOF
