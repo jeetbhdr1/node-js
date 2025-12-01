@@ -35,22 +35,22 @@ jobs:
           APP_NAME: ${{ secrets.APP_NAME }}
         run: |
           ssh -i ~/.ssh/id_ed25519 "${{ secrets.SSH_USER }}"@"${{ secrets.SSH_HOST }}" << 'EOF'
-            set -e
+set -e
 
-            echo "Starting deploy on server..."
+echo "Starting deploy on server..."
 
-            cd /root/node-js
+cd /root/node-js
 
-            # Pull latest code
-            git fetch --all
-            git reset --hard origin/main
+# Pull latest code
+git fetch --all
+git reset --hard origin/main
 
-            # Install deps
-            npm install
+# Install deps
+npm install
 
-            # Restart OR start with PM2
-            pm2 restart "$APP_NAME" || pm2 start server.js --name "$APP_NAME"
+# Restart OR start with PM2
+pm2 restart "$APP_NAME" || pm2 start server.js --name "$APP_NAME"
 
-            pm2 save
-            echo "Deploy complete."
+pm2 save
+echo "Deploy complete."
 EOF
