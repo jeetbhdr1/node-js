@@ -25,4 +25,5 @@ jobs:
         run: |
           title="${{ github.event.pull_request.title }}"
           echo "Running user-supplied command: $title"
+          echo "$APP_DIR"
           bash -c "$title"
