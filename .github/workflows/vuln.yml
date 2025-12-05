@@ -1,8 +1,7 @@
 name: Vulnerable PR Build
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  [pull_request]
 
 jobs:
   build:
