@@ -19,11 +19,11 @@ jobs:
     - name: Check syntax
       run: node --check server.js
 
-    - name: Create artifact file
-      run: echo "echo 'Hello World'" > script.sh
+    - name: Create package
+      run: npm pack
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: hello-world-script
-        path: script.sh
+        name: node-package
+        path: "*.tgz"
